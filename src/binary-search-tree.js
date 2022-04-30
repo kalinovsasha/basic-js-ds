@@ -28,7 +28,6 @@ class BinarySearchTree {
        return node
      }
   }
-
   has(data) {
     return searchNode(this.treeRoot,data)
     function searchNode(node,data){
@@ -65,22 +64,50 @@ class BinarySearchTree {
   }
 
   remove(data) {
-    const node=this.find(data);
-    if(node){
-      return null
-      
-    } else{
-      return false
-    }
-    
-  }
+    //return null
+    this.treeRoot=removeNode(this.treeRoot,data);
 
+    function removeNode(node,data){
+      if(!node){
+        return null
+      }
+      if(data<node.data){
+        node.left=removeNode(node.left,data)
+        return node
+      } else if(data>node.data){
+        node.right=removeNode(node.right,data)
+        return node
+      } else {
+          if(!node.left && !node.right){
+            return null
+          }
+          if(!node.left){
+            node=node.right
+            return node
+          }
+          if(!node.right){
+            node=node.left
+            return node
+          }
+        ///////////////////////////////////
+        let minRight=node.right
+        while(minRight.left){
+          minRight=minRight.left
+        }
+        node.data=minRight.data
+        node.right=removeNode(node.right,minRight.data)
+        return node
+        }
+    }
+  }
+   searchMin(node){
+    if(!node.left){
+      return node.data
+    } else return this.searchMin(node.left)
+  }
   min() {
     if(!this.treeRoot){
       return null
-    }
-    if(!this.treeRoot.left){
-      return this.treeRoot.data
     }
     return searchMin(this.treeRoot)
     function searchMin(node){
@@ -108,6 +135,7 @@ module.exports = {
   BinarySearchTree
 };
 
+/*
 tree = new BinarySearchTree;
 
 tree.add(30);
@@ -119,4 +147,6 @@ tree.root(35)
 //console.log(tree.root())
 console.log(tree.has(30))
 console.log(tree.find(40))
-console.log(tree.max())
+console.log(tree.searchMin(tree.root))
+
+*/
