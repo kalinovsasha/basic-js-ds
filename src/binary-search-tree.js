@@ -1,6 +1,9 @@
 const { NotImplementedError } = require('../extensions/index.js');
 const { Node } = require('../extensions/list-tree.js');
 
+
+
+
 class BinarySearchTree {
     constructor(){
       this.treeRoot=null;
@@ -8,7 +11,6 @@ class BinarySearchTree {
   root() {
     return this.treeRoot
   }
-
   add(data) {
      this.treeRoot= addNode(this.treeRoot,data)
      function addNode(node,data){
@@ -25,12 +27,10 @@ class BinarySearchTree {
        }
        return node
      }
-
   }
 
   has(data) {
     return searchNode(this.treeRoot,data)
-
     function searchNode(node,data){
       if(!node){
         return false
@@ -43,15 +43,11 @@ class BinarySearchTree {
       }
       if(data>node.data){
         return searchNode(node.right,data)
-      }
-      
-    }
-    
+      } 
+    }    
   }
-
   find(data) {
     return findNode(this.treeRoot,data)
-
     function findNode(node,data){
       if(!node){
         return node
@@ -65,19 +61,45 @@ class BinarySearchTree {
       if(data>node.data){
         return findNode(node.right,data)
       }
+    }  
+  }
+
+  remove(data) {
+    const node=this.find(data);
+    if(node){
+      return null
+      
+    } else{
+      return false
     }
     
   }
 
-  remove(/* data */) {
-    
-  }
-
   min() {
-    
+    if(!this.treeRoot){
+      return null
+    }
+    if(!this.treeRoot.left){
+      return this.treeRoot.data
+    }
+    return searchMin(this.treeRoot)
+    function searchMin(node){
+      if(!node.left){
+        return node.data
+      } else return searchMin(node.left)
+    }
   }
 
   max() {
+    if(!this.treeRoot){
+      return null
+    }
+    return searchMax(this.treeRoot)
+    function searchMax(node){
+      if(!node.right){
+        return node.data
+      } else return searchMax(node.right)
+    }
     
   }
 }
@@ -87,11 +109,14 @@ module.exports = {
 };
 
 tree = new BinarySearchTree;
+
 tree.add(30);
 tree.add(20);
 tree.add(40);
 tree.add(50);
-tree.root(35)
-console.log(tree.root())
+tree.add(30);
+tree.root(35) 
+//console.log(tree.root())
 console.log(tree.has(30))
 console.log(tree.find(40))
+console.log(tree.max())
