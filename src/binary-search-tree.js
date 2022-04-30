@@ -64,7 +64,6 @@ class BinarySearchTree {
   }
 
   remove(data) {
-    //return null
     this.treeRoot=removeNode(this.treeRoot,data);
 
     function removeNode(node,data){
@@ -100,11 +99,7 @@ class BinarySearchTree {
         }
     }
   }
-   searchMin(node){
-    if(!node.left){
-      return node.data
-    } else return this.searchMin(node.left)
-  }
+  
   min() {
     if(!this.treeRoot){
       return null
@@ -127,8 +122,8 @@ class BinarySearchTree {
         return node.data
       } else return searchMax(node.right)
     }
-    
   }
+
 }
 
 module.exports = {
